@@ -1,0 +1,209 @@
+@import "tailwindcss";
+
+/* Lenis smooth scroll styles - Enhanced for ultra-smooth experience */
+html.lenis {
+  height: auto;
+  overflow-x: hidden;
+}
+
+.lenis,
+.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Ensure all scrolling uses Lenis */
+html {
+  scroll-behavior: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  scroll-behavior: auto !important;
+}
+
+/* Prevent native smooth scroll to let Lenis handle it */
+* {
+  scroll-behavior: auto !important;
+}
+
+/* Optimize for smooth scrolling performance */
+html,
+body {
+  overscroll-behavior-y: none;
+  overscroll-behavior-x: none;
+}
+
+/* Smooth transitions for all elements */
+* {
+  scroll-behavior: auto !important;
+}
+
+/* Ensure smooth scrolling with Lenis */
+html {
+  scroll-behavior: auto !important;
+}
+
+body {
+  scroll-behavior: auto !important;
+}
+
+/* Dark mode configuration */
+@theme {
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+}
+
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --color-background: #0f172a;
+    --color-foreground: #f8fafc;
+  }
+}
+
+:root {
+  --background: 255 255 255;
+  --foreground: 15 23 42;
+  --muted: 241 245 249;
+  --muted-foreground: 100 116 139;
+}
+
+.dark {
+  --background: 15 23 42;
+  --foreground: 248 250 252;
+  --muted: 30 41 59;
+  --muted-foreground: 148 163 184;
+}
+
+body {
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
+  font-feature-settings: "rlig" 1, "calt" 1;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(203 213 225);
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgb(51 65 85);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(148 163 184);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgb(71 85 105);
+}
+
+/* Smooth transitions for dark mode */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.animate-slide-in-from-bottom {
+  animation: slideInFromBottom 0.3s ease-out;
+}
+
+/* Accordion animations */
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+.animate-accordion-down {
+  animation: accordion-down 0.2s ease-out;
+}
+
+.animate-accordion-up {
+  animation: accordion-up 0.2s ease-out;
+}
+
+/* Spotlight animation */
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
+.animate-spotlight {
+  animation: spotlight 2s ease-out forwards;
+}
+
+/* Muted foreground utility */
+.text-muted-foreground {
+  color: rgb(var(--muted-foreground));
+}
