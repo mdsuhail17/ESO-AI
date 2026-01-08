@@ -546,7 +546,7 @@ export default function Home() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  ESo AI
+                  Eso AI
                 </h1>
                 <p className={`text-xs transition-colors ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Your Intelligent Study Companion</p>
               </div>
@@ -709,7 +709,7 @@ export default function Home() {
               </div>
 
               {/* Textbook List */}
-              <div data-lenis-prevent className="flex-1 overflow-y-auto">
+              <div className="flex-1 overflow-y-auto">
                 <p className={`text-xs font-semibold uppercase tracking-wider mb-3 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                   Textbooks
                 </p>
@@ -770,7 +770,7 @@ export default function Home() {
                   <p className={`text-xs font-semibold uppercase tracking-wider mb-3 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                     {mode === 'student' ? 'Recent Conversations' : 'Recent Lectures'}
                   </p>
-                  <div data-lenis-prevent className="space-y-2 max-h-48 overflow-y-auto">
+                  <div className="space-y-2 max-h-48 overflow-y-auto">
                     {conversations
                       .filter((conv) => {
                         if (mode === 'student') {

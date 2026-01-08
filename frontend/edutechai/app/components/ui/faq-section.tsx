@@ -14,7 +14,7 @@ import { motion } from "framer-motion";
 function FAQ() {
   const faqs = [
     {
-      question: "What exactly is ESo AI?",
+      question: "What exactly is Eso AI?",
       answer: "Your smart AI sidekick for textbooks. Upload a PDF, ask questions, and get instant, book-accurate answers or notes—saving hours of manual searching for students and teachers."
     },
     {
@@ -48,90 +48,54 @@ function FAQ() {
   ];
 
   return (
-    <div className="w-full py-20 lg:py-40 bg-black relative overflow-hidden group">
-      {/* Animated Navy Blue Gradient Background on Hover */}
-      <motion.div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        initial={{ opacity: 0 }}
-        whileHover={{ opacity: 1 }}
-        style={{
-          background: "linear-gradient(135deg, rgba(0, 30, 60, 0.4) 0%, rgba(0, 50, 100, 0.3) 50%, rgba(0, 30, 60, 0.4) 100%)",
-        }}
-        animate={{
-          opacity: [0, 0.3, 0],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      
-      {/* Additional animated gradient overlay */}
-      <motion.div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(90deg, transparent 0%, rgba(0, 50, 100, 0.15) 50%, transparent 100%)",
-        }}
-        animate={{
-          x: ["-100%", "100%"],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-      />
-
+    <div className="w-full py-20 lg:py-40 bg-black relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-10">
           <motion.div
             className="flex gap-10 flex-col"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, margin: "-100px" }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
             <div className="flex gap-4 flex-col">
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: false, margin: "-50px" }}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
                 <Badge variant="outline" className="border-white/20 text-white/80">FAQ</Badge>
               </motion.div>
               <div className="flex gap-2 flex-col">
-                <motion.h4
-                  className="text-3xl md:text-5xl tracking-tighter max-w-xl text-left font-regular text-white"
+                <motion.h2
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight text-left font-bold text-white"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, margin: "-50px" }}
+                  viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
                   Frequently Asked Questions
-                </motion.h4>
+                </motion.h2>
                 <motion.p
                   className="text-lg max-w-xl lg:max-w-lg leading-relaxed tracking-tight text-white/70 text-left"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, margin: "-50px" }}
+                  viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, delay: 0.3 }}
                 >
-                  Everything you need to know about ESo AI. Can't find the answer you're looking for? Please reach out to our support team.
+                  Everything you need to know about Eso AI. Can't find the answer you're looking for? Please reach out to our support team.
                 </motion.p>
               </div>
               <motion.div
-                className=""
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-50px" }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                whileHover={{ scale: 1.05 }}
               >
                 <Button className="gap-4 border-white/20 text-white hover:bg-white/10 hover:border-blue-500/50 transition-all duration-300" variant="outline" asChild>
                   <a href="mailto:mdsuhail.code@gmail.com">
-                    Any questions? Reach out <PhoneCall className="w-4 h-4" />
+                    Any questions? Reach out <PhoneCall className="w-4 h-4 sm:w-5 sm:h-5" />
                   </a>
                 </Button>
               </motion.div>
@@ -140,7 +104,7 @@ function FAQ() {
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, margin: "-100px" }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
             <Accordion type="single" collapsible className="w-full">
@@ -149,31 +113,17 @@ function FAQ() {
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, margin: "-50px" }}
+                  viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{
-                    scale: 1.02,
-                    transition: { duration: 0.2 }
-                  }}
                 >
                   <AccordionItem
                     value={`index-${index}`}
-                    className="border-white/10 group/item relative overflow-hidden rounded-lg p-2 -m-2"
+                    className="border-white/10"
                   >
-                    {/* Navy blue gradient on hover for each item */}
-                    <motion.div
-                      className="absolute inset-0 rounded-lg opacity-0 group-hover/item:opacity-100 transition-opacity duration-300"
-                      style={{
-                        background: "linear-gradient(90deg, rgba(0, 30, 60, 0.25) 0%, rgba(0, 50, 100, 0.2) 50%, rgba(0, 30, 60, 0.25) 100%)",
-                      }}
-                      whileHover={{
-                        scale: 1.01,
-                      }}
-                    />
-                    <AccordionTrigger className="text-white hover:text-white/80 relative z-10">
+                    <AccordionTrigger className="text-white hover:text-white/80 text-left">
                       {faq.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-white/70 relative z-10">
+                    <AccordionContent className="text-white/70">
                       {faq.answer}
                     </AccordionContent>
                   </AccordionItem>

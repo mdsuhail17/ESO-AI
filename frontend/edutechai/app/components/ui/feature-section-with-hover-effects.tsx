@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import {
   Search,
   Lightbulb,
@@ -17,46 +18,46 @@ export function FeaturesSectionWithHoverEffects() {
       title: "Instant Answers",
       description:
         "Find exact textbook content in seconds – no more manual searching.",
-      icon: <Search className="w-6 h-6" />,
+      icon: <Search className="w-5 h-5 sm:w-6 sm:h-6" />,
     },
     {
       title: "Simple Explanations",
       description:
         "Don't understand? Ask 'Explain this simply' – grounded in your book.",
-      icon: <Lightbulb className="w-6 h-6" />,
+      icon: <Lightbulb className="w-5 h-5 sm:w-6 sm:h-6" />,
     },
     {
       title: "Exam Prep Mode",
       description:
         "Align queries with syllabus for focused revision.",
-      icon: <BookOpen className="w-6 h-6" />,
+      icon: <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />,
     },
     {
       title: "Note Generation",
       description: "Create bullet-point notes, slides, or quizzes from textbook extracts.",
-      icon: <FileText className="w-6 h-6" />,
+      icon: <FileText className="w-5 h-5 sm:w-6 sm:h-6" />,
     },
     {
       title: "Time Saver",
       description: "Turn 2-hour prep into minutes.",
-      icon: <Clock className="w-6 h-6" />,
+      icon: <Clock className="w-5 h-5 sm:w-6 sm:h-6" />,
     },
     {
       title: "Shareable Outputs",
       description:
         "Export as PDF/Markdown for students.",
-      icon: <Share2 className="w-6 h-6" />,
+      icon: <Share2 className="w-5 h-5 sm:w-6 sm:h-6" />,
     },
     {
       title: "Accurate & Faithful",
       description:
         "Always references your textbook – no hallucinations.",
-      icon: <CheckCircle className="w-6 h-6" />,
+      icon: <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6" />,
     },
     {
       title: "Always Available",
       description: "Access your textbooks and get answers anytime, anywhere.",
-      icon: <BookOpen className="w-6 h-6" />,
+      icon: <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />,
     },
   ];
   return (
@@ -80,7 +81,11 @@ const Feature = ({
   index: number;
 }) => {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
       className={cn(
         "flex flex-col lg:border-r py-10 relative group/feature border-white/10",
         (index === 0 || index === 4) && "lg:border-l border-white/10",
@@ -105,7 +110,7 @@ const Feature = ({
       <p className="text-sm text-neutral-600 dark:text-neutral-300 max-w-xs relative z-10 px-10 text-white/70">
         {description}
       </p>
-    </div>
+    </motion.div>
   );
 };
 

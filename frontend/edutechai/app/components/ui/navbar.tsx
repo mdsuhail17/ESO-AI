@@ -6,35 +6,19 @@ import { MenuToggleIcon } from "./menu-toggle-icon";
 import { LogIn, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import Lenis from "lenis";
 
 export const Navbar = ({ isLoggedIn = false, userName = "" }: { isLoggedIn?: boolean; userName?: string }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const [lenis, setLenis] = useState<Lenis | null>(null);
 
   useEffect(() => {
-    // Get Lenis instance from window - check multiple times as it may not be ready immediately
-    const checkLenis = () => {
-      if (typeof window !== 'undefined') {
-        const lenisInstance = (window as any).lenis;
-        if (lenisInstance) {
-          setLenis(lenisInstance);
-          return true;
-        }
-      }
-      return false;
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
     };
-
-    // Check immediately
-    if (!checkLenis()) {
-      // If not found, check again after a short delay
-      const timeout = setTimeout(() => {
-        checkLenis();
-      }, 100);
-      return () => clearTimeout(timeout);
-    }
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const menuItems = [
@@ -47,35 +31,22 @@ export const Navbar = ({ isLoggedIn = false, userName = "" }: { isLoggedIn?: boo
   ];
 
   // Close menu when a link is clicked and handle smooth scroll
-  // On mobile: close automatically, on desktop: stay open
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    
-    // Check if mobile (screen width < 1024px for lg breakpoint)
+
     const isMobile = window.innerWidth < 1024;
-    
     if (isMobile) {
       setIsOpen(false);
     }
-    
-    if (lenis) {
-      if (href === '#top') {
-        lenis.scrollTo(0, { duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-      } else {
-        const element = document.querySelector(href);
-        if (element) {
-          lenis.scrollTo(element, { duration: 1.5, offset: -80, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-        }
-      }
+
+    if (href === '#top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      // Fallback to native smooth scroll
-      if (href === '#top') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        const element = document.querySelector(href);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+      const element = document.querySelector(href);
+      if (element) {
+        const offset = 80;
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
       }
     }
   };
@@ -83,53 +54,43 @@ export const Navbar = ({ isLoggedIn = false, userName = "" }: { isLoggedIn?: boo
   // Handle logo click - scroll to hero section
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    // Check if we're on the home page
     if (pathname === '/') {
-      // Scroll to top/hero section using Lenis
-      if (lenis) {
-        lenis.scrollTo(0, { duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      // Navigate to home page
       router.push('/');
     }
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 p-6">
-      <div className="flex items-center justify-between w-full px-8 md:px-16 lg:px-24">
+    <nav className={`fixed top-0 left-0 right-0 z-50 p-2 sm:p-3 md:p-4 transition-all duration-300 ${
+      scrolled ? "bg-black/80 backdrop-blur-xl border-b border-white/10" : ""
+    }`}>
+      <div className="flex items-center justify-between w-full px-2 sm:px-4 md:px-8 lg:px-16">
         {/* Logo on Left - Home Page Link */}
-        <Link 
-          href="/" 
+        <Link
+          href="/"
           onClick={handleLogoClick}
-          className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer"
+          className="hover:opacity-90 transition-opacity cursor-pointer"
         >
-          <div className="w-10 h-10 rounded-xl bg-white border-2 border-black flex items-center justify-center shadow-lg">
-            <span className="text-black text-xl font-bold">E</span>
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-white">
-              ESo AI
-            </h1>
-          </div>
+          <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-white/60 via-white to-white/60 bg-clip-text text-transparent">
+            Eso AI
+          </h1>
         </Link>
 
         {/* Right Side - Login/Profile and Menu */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           {/* Login Button or Profile */}
           {isLoggedIn ? (
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/80 backdrop-blur-sm border border-white/20 text-white">
-              <User className="w-4 h-4" />
-              <span className="text-sm">{userName}</span>
+            <div className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black/80 backdrop-blur-sm border border-white/20 text-white">
+              <User className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm">{userName}</span>
             </div>
           ) : (
             <Link
               href="/login"
-              className="px-4 py-2 rounded-full bg-black/80 backdrop-blur-sm border border-white/20 text-white hover:bg-white/10 transition-all flex items-center gap-2 text-sm"
+              className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full bg-black/80 backdrop-blur-sm border border-white/20 text-white hover:bg-white/10 transition-all flex items-center gap-2 text-sm sm:text-base font-medium"
             >
-              <LogIn className="w-4 h-4" />
+              <LogIn className="w-4 h-4 sm:w-5 sm:h-5" />
               Login
             </Link>
           )}
@@ -138,15 +99,15 @@ export const Navbar = ({ isLoggedIn = false, userName = "" }: { isLoggedIn?: boo
           <div className="relative">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="relative z-50 p-3 rounded-full bg-black/80 backdrop-blur-sm border border-white/20 text-white hover:bg-white/10 transition-all"
+              className="relative z-50 p-2 sm:p-3 rounded-full bg-black/80 backdrop-blur-sm border border-white/20 text-white hover:bg-white/10 transition-all"
               aria-label="Toggle menu"
             >
-              <MenuToggleIcon open={isOpen} className="w-8 h-8" duration={500} stroke="currentColor" />
+              <MenuToggleIcon open={isOpen} className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" duration={500} stroke="currentColor" />
             </button>
 
             {/* Menu */}
             {isOpen && (
-              <div className="absolute top-16 right-0 bg-black/95 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl p-4 whitespace-nowrap">
+              <div className="absolute top-12 sm:top-14 md:top-16 right-0 bg-black/95 backdrop-blur-xl border border-white/20 rounded-xl sm:rounded-2xl shadow-2xl p-3 sm:p-4 whitespace-nowrap">
                 <MenuVertical
                   menuItems={menuItems}
                   color="#3b82f6"

@@ -26,6 +26,23 @@ export const TextHoverEffect = ({
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
   const [maskPosition, setMaskPosition] = useState({ cx: "50%", cy: "50%" });
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(false);
+          setTimeout(() => setIsInView(true), 50);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    if (svgRef.current) {
+      observer.observe(svgRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (svgRef.current && cursor.x !== null && cursor.y !== null) {
@@ -108,13 +125,13 @@ export const TextHoverEffect = ({
         textAnchor="middle"
         dominantBaseline="middle"
         strokeWidth="0.3"
-        className="fill-transparent stroke-[#3ca2fa] font-[helvetica] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold 
+        className="fill-transparent stroke-[#3ca2fa] font-[helvetica] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold
         dark:stroke-[#3ca2fa99]"
         initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
-        animate={{
+        animate={isInView ? {
           strokeDashoffset: 0,
           strokeDasharray: 1000,
-        }}
+        } : { strokeDashoffset: 1000, strokeDasharray: 1000 }}
         transition={{
           duration: 4,
           ease: "easeInOut",
@@ -189,135 +206,139 @@ function HoverFooter() {
   ];
 
   return (
-    <footer id="contact" className="bg-[#0F0F11]/10 relative h-fit rounded-3xl overflow-hidden m-8">
-      <div className="w-full mx-auto p-14 z-50 relative pointer-events-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-9 gap-8 md:gap-12 lg:gap-16 pb-12 justify-items-start">
-          {/* Left spacing */}
-          <div className="hidden lg:block"></div>
+    <footer id="contact" className="bg-[#0F0F11]/10 relative h-fit rounded-2xl overflow-hidden mx-4 sm:mx-6 my-6">
+      <motion.div
+        className="w-full mx-auto px-6 sm:px-8 lg:px-12 py-10 md:py-12 z-50 relative pointer-events-auto"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 pb-10">
           {/* Brand section */}
-          <div className="flex flex-col space-y-4 text-left">
-            <div className="flex items-center justify-start space-x-2">
-              <span className="text-[#3ca2fa] text-3xl md:text-4xl lg:text-5xl font-extrabold">
+          <motion.div
+            className="flex flex-col space-y-4 sm:col-span-2 lg:col-span-1"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <div className="flex items-center space-x-2">
+              <span className="text-[#3ca2fa] text-2xl md:text-3xl font-extrabold">
                 &hearts;
               </span>
-              <span className="text-white text-3xl md:text-4xl lg:text-5xl font-bold">ESo AI</span>
+              <span className="text-white text-2xl md:text-3xl font-bold">Eso AI</span>
             </div>
-            <p className="text-sm md:text-base lg:text-lg text-white/70 leading-relaxed">
+            <p className="text-sm md:text-base text-white/60 leading-relaxed max-w-xs">
               Your intelligent study companion. Transform learning with AI-powered textbook assistance.
             </p>
-          </div>
+          </motion.div>
 
-          {/* Spacing between Brand and Product */}
-          <div className="hidden lg:block"></div>
-
-          {/* Footer link sections */}
-          {footerLinks.map((section, index) => (
-            <div key={section.title} className="text-left">
-              <h4 className="text-white text-lg md:text-xl lg:text-2xl font-semibold mb-6">
-                {section.title}
-              </h4>
-              <ul className="space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.label} className="relative">
-                    <a
-                      href={link.href}
-                      className="text-white/70 hover:text-[#3ca2fa] transition-colors text-sm md:text-base lg:text-lg"
-                    >
-                      {link.label}
-                    </a>
-                    {link.pulse && (
-                      <span className="absolute top-0 right-[-10px] w-2 h-2 rounded-full bg-[#3ca2fa] animate-pulse"></span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-
-          {/* Spacing between Product and Contact Us */}
-          <div className="hidden lg:block"></div>
+          {/* Product links */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <h4 className="text-white text-sm font-semibold uppercase tracking-wider mb-4">
+              Product
+            </h4>
+            <ul className="space-y-3">
+              {footerLinks[0].links.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-white/60 hover:text-[#3ca2fa] transition-colors text-sm md:text-base"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
 
           {/* Contact section */}
-          <div className="text-left">
-            <h4 className="text-white text-lg md:text-xl lg:text-2xl font-semibold mb-6">
-              Contact Us
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <h4 className="text-white text-sm font-semibold uppercase tracking-wider mb-4">
+              Contact
             </h4>
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {contactInfo.map((item, i) => (
-                <li key={i} className="flex items-center justify-start space-x-3">
-                  {item.icon}
+                <li key={i} className="flex items-center space-x-2">
+                  <span className="text-[#3ca2fa]">{item.icon}</span>
                   {item.href ? (
                     <a
                       href={item.href}
-                      className="text-white/70 hover:text-[#3ca2fa] transition-colors text-sm md:text-base lg:text-lg"
+                      className="text-white/60 hover:text-[#3ca2fa] transition-colors text-sm md:text-base"
                     >
                       {item.text}
                     </a>
                   ) : (
-                    <span className="text-white/70 hover:text-[#3ca2fa] transition-colors text-sm md:text-base lg:text-lg">
-                      {item.text}
-                    </span>
+                    <span className="text-white/60 text-sm md:text-base">{item.text}</span>
                   )}
                 </li>
               ))}
             </ul>
-          </div>
-
-          {/* Spacing between Contact Us and Connect */}
-          <div className="hidden lg:block"></div>
+          </motion.div>
 
           {/* Connect section */}
-          <div className="text-left">
-            <h4 className="text-white text-lg md:text-xl lg:text-2xl font-semibold mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <h4 className="text-white text-sm font-semibold uppercase tracking-wider mb-4">
               Connect
             </h4>
-            <ul className="space-y-4">
-              <li className="flex items-center justify-start space-x-3">
-                <Linkedin size={18} className="text-[#3ca2fa]" />
+            <ul className="space-y-3">
+              <li className="flex items-center space-x-2">
+                <Linkedin size={16} className="text-[#3ca2fa]" />
                 <a
                   href="https://www.linkedin.com/in/md-suhail-8632ab317"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white/70 hover:text-[#3ca2fa] transition-colors text-sm md:text-base lg:text-lg"
+                  className="text-white/60 hover:text-[#3ca2fa] transition-colors text-sm md:text-base"
                 >
                   LinkedIn
                 </a>
               </li>
-              <li className="flex items-center justify-start space-x-3">
-                <ExternalLink size={18} className="text-[#3ca2fa]" />
+              <li className="flex items-center space-x-2">
+                <ExternalLink size={16} className="text-[#3ca2fa]" />
                 <a
                   href="https://mdsuhail.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white/70 hover:text-[#3ca2fa] transition-colors text-sm md:text-base lg:text-lg"
+                  className="text-white/60 hover:text-[#3ca2fa] transition-colors text-sm md:text-base"
                 >
                   Portfolio
                 </a>
               </li>
-              <li className="flex items-center justify-start space-x-3 relative z-50">
-                <Github size={18} className="text-[#3ca2fa]" />
+              <li className="flex items-center space-x-2 relative z-50">
+                <Github size={16} className="text-[#3ca2fa]" />
                 <a
                   href="https://github.com/mdsuhail17"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white/70 hover:text-[#3ca2fa] transition-colors text-sm md:text-base lg:text-lg cursor-pointer relative z-50"
+                  className="text-white/60 hover:text-[#3ca2fa] transition-colors text-sm md:text-base"
                 >
                   GitHub
                 </a>
               </li>
             </ul>
-          </div>
-
-          {/* Right spacing */}
-          <div className="hidden lg:block"></div>
+          </motion.div>
         </div>
-
-        <hr className="border-t border-white/10 my-8" />
-      </div>
+      </motion.div>
 
       {/* Text hover effect */}
-      <div className="flex h-[20rem] md:h-[25rem] lg:h-[30rem] -mt-32 md:-mt-40 lg:-mt-52 -mb-20 md:-mb-28 lg:-mb-36 pointer-events-none w-full">
-        <TextHoverEffect text="ESo AI" className="z-10 pointer-events-none w-full" />
+      <div className="flex h-[20rem] sm:h-[22rem] md:h-[24rem] lg:h-[28rem] -mt-8 md:-mt-12 lg:-mt-16 pointer-events-none w-full">
+        <TextHoverEffect text="Eso AI" className="z-0 pointer-events-none w-full opacity-60" />
       </div>
 
       <FooterBackgroundGradient />

@@ -84,23 +84,29 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-[#030303] flex items-center justify-center px-4 relative overflow-hidden">
+      {/* Background gradient effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#3ca2fa]/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-3xl" />
+      </div>
+
+      <div className="w-full max-w-md relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl"
+          className="bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl"
         >
           {/* Header */}
           <div className="text-center mb-8">
             <Link href="/" className="inline-block mb-4">
-              <h1 className="text-3xl font-bold text-white">ESo AI</h1>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-white/60 via-white to-white/60 bg-clip-text text-transparent">Eso AI</h1>
             </Link>
             <h2 className="text-2xl font-semibold text-white mb-2">
               {isRegistering ? "Create Account" : "Welcome Back"}
             </h2>
-            <p className="text-white/60">
+            <p className="text-white/50">
               {isRegistering
                 ? "Sign up to get started"
                 : "Sign in to continue"}
@@ -118,16 +124,16 @@ export default function LoginPage() {
           <form onSubmit={isRegistering ? handleRegister : handleLogin}>
             {isRegistering && (
               <div className="mb-4">
-                <label className="block text-white/80 text-sm mb-2">Name</label>
+                <label className="block text-white/70 text-sm mb-2">Name</label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
                     autoComplete="name"
-                    className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-white/30 transition-all"
+                    className="w-full pl-10 pr-4 py-3 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-[#3ca2fa]/50 focus:ring-1 focus:ring-[#3ca2fa]/20 transition-all"
                     placeholder="Enter your name"
                   />
                 </div>
@@ -135,32 +141,32 @@ export default function LoginPage() {
             )}
 
             <div className="mb-4">
-              <label className="block text-white/80 text-sm mb-2">Email</label>
+              <label className="block text-white/70 text-sm mb-2">Email</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   autoComplete="email"
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-white/30 transition-all"
+                  className="w-full pl-10 pr-4 py-3 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-[#3ca2fa]/50 focus:ring-1 focus:ring-[#3ca2fa]/20 transition-all"
                   placeholder="Enter your email"
                 />
               </div>
             </div>
 
             <div className="mb-6">
-              <label className="block text-white/80 text-sm mb-2">Password</label>
+              <label className="block text-white/70 text-sm mb-2">Password</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete={isRegistering ? "new-password" : "current-password"}
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-white/30 transition-all"
+                  className="w-full pl-10 pr-4 py-3 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-[#3ca2fa]/50 focus:ring-1 focus:ring-[#3ca2fa]/20 transition-all"
                   placeholder="Enter your password"
                 />
               </div>
@@ -169,13 +175,16 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg font-semibold transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-3 bg-[#3ca2fa] hover:bg-[#2b8fe6] text-white rounded-xl font-semibold transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-[#3ca2fa]/20"
             >
               {loading ? (
-                "Processing..."
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Processing...
+                </div>
               ) : (
                 <>
-                  {isRegistering ? "Register" : "Login"}
+                  {isRegistering ? "Create Account" : "Sign In"}
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
@@ -190,11 +199,11 @@ export default function LoginPage() {
                 setIsRegistering(!isRegistering);
                 setError("");
               }}
-              className="text-white/60 hover:text-white transition-colors text-sm"
+              className="text-white/50 hover:text-[#3ca2fa] transition-colors text-sm"
             >
               {isRegistering
-                ? "Already have an account? Login"
-                : "Don't have an account? Register"}
+                ? "Already have an account? Sign In"
+                : "Don't have an account? Create one"}
             </button>
           </div>
         </motion.div>

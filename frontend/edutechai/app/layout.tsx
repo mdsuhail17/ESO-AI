@@ -1,20 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "./components/smooth-scroll";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
-  title: "ESo AI Agent",
+  title: "Eso AI Agent",
   description: "AI-powered study companion for students and teachers",
 };
 
@@ -25,10 +13,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <SmoothScroll>{children}</SmoothScroll>
+      <head>
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="font-satoshi antialiased">
+        {children}
       </body>
     </html>
   );

@@ -486,7 +486,7 @@ export default function EtherealBeamsHero() {
           <div className="flex h-16 items-center justify-between">
             {/* Brand Name Only */}
             <div className="flex items-center">
-              <span className="text-xl font-bold text-white">ESo AI</span>
+              <span className="text-xl font-bold text-white">Eso AI</span>
             </div>
 
             {/* Glassmorphic Navigation Pills */}
