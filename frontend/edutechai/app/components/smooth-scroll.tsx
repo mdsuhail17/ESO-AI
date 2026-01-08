@@ -16,12 +16,8 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       gestureOrientation: "vertical",
       smoothWheel: true,
       wheelMultiplier: 0.7,
-      smoothTouch: true,
-      touchMultiplier: 1.2,
       infinite: false,
       syncTouch: true,
-      touchInertiaMultiplier: 50,
-      touchInertiaDeltaMultiplier: 0.5,
     });
 
     // Make Lenis available globally for other components
